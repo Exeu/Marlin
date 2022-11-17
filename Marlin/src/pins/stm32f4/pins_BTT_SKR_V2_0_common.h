@@ -59,6 +59,9 @@
 //
 #define SERVO0_PIN                          PE5
 
+#define SPINDLE_LASER_ENA_PIN           PB6
+#define SPINDLE_LASER_PWM_PIN           PE6
+
 //
 // Trinamic Stallguard pins
 //
@@ -344,23 +347,23 @@
  *                ------                                   ------
  *                 EXP1                                     EXP2
  */
-#define EXP1_01_PIN                         PC5
-#define EXP1_02_PIN                         PB0
-#define EXP1_03_PIN                         PB1
-#define EXP1_04_PIN                         PE9
-#define EXP1_05_PIN                         PE10
-#define EXP1_06_PIN                         PE11
-#define EXP1_07_PIN                         PE12
-#define EXP1_08_PIN                         PE13
+#define EXP1_03_PIN                         PE13
+#define EXP1_04_PIN                         PE12
+#define EXP1_05_PIN                         PE11
+#define EXP1_06_PIN                         PE10
+#define EXP1_07_PIN                         PE9
+#define EXP1_08_PIN                         PB1
+#define EXP1_09_PIN                         PB0
+#define EXP1_10_PIN                         PC5
 
-#define EXP2_01_PIN                         PA6
-#define EXP2_02_PIN                         PA5
-#define EXP2_03_PIN                         PE7
-#define EXP2_04_PIN                         PA4
-#define EXP2_05_PIN                         PB2
-#define EXP2_06_PIN                         PA7
-#define EXP2_07_PIN                         PC4
-#define EXP2_08_PIN                         -1
+#define EXP2_03_PIN                         -1
+#define EXP2_04_PIN                         PC4
+#define EXP2_05_PIN                         PA7
+#define EXP2_06_PIN                         PB2
+#define EXP2_07_PIN                         PA4
+#define EXP2_08_PIN                         PE7
+#define EXP2_09_PIN                         PA5
+#define EXP2_10_PIN                         PA6
 
 //
 // Onboard SD card
@@ -443,65 +446,70 @@
 #if IS_TFTGLCD_PANEL
 
   #if ENABLED(TFTGLCD_PANEL_SPI)
-    #define TFTGLCD_CS               EXP2_03_PIN
+    #define TFTGLCD_CS               EXP2_08_PIN
   #endif
 
 #elif HAS_WIRED_LCD
 
-  #define BEEPER_PIN                 EXP1_01_PIN
-  #define BTN_ENC                    EXP1_02_PIN
+  #define BEEPER_PIN                 EXP1_10_PIN
+  #define BTN_ENC                    EXP1_09_PIN
 
   #if ENABLED(CR10_STOCKDISPLAY)
 
-    #define LCD_PINS_RS              EXP1_07_PIN
-
-    #define BTN_EN1                  EXP1_03_PIN
-    #define BTN_EN2                  EXP1_05_PIN
-
-    #define LCD_PINS_ENABLE          EXP1_08_PIN
-    #define LCD_PINS_D4              EXP1_06_PIN
-
-  #elif ENABLED(MKS_MINI_12864)
-
-    #define DOGLCD_A0                EXP1_07_PIN
-    #define DOGLCD_CS                EXP1_06_PIN
-    #define BTN_EN1                  EXP2_03_PIN
-    #define BTN_EN2                  EXP2_05_PIN
-
-  #else
-
     #define LCD_PINS_RS              EXP1_04_PIN
 
-    #define BTN_EN1                  EXP2_03_PIN
-    #define BTN_EN2                  EXP2_05_PIN
+    #define BTN_EN1                  EXP1_08_PIN
+    #define BTN_EN2                  EXP1_06_PIN
 
     #define LCD_PINS_ENABLE          EXP1_03_PIN
     #define LCD_PINS_D4              EXP1_05_PIN
 
+    // CR10_STOCKDISPLAY default timing is too fast
+    #undef BOARD_ST7920_DELAY_1
+    #undef BOARD_ST7920_DELAY_2
+    #undef BOARD_ST7920_DELAY_3
+
+  #elif ENABLED(MKS_MINI_12864)
+
+    #define DOGLCD_A0                EXP1_04_PIN
+    #define DOGLCD_CS                EXP1_05_PIN
+    #define BTN_EN1                  EXP2_08_PIN
+    #define BTN_EN2                  EXP2_06_PIN
+
+  #else
+
+    #define LCD_PINS_RS              EXP1_07_PIN
+
+    #define BTN_EN1                  EXP2_08_PIN
+    #define BTN_EN2                  EXP2_06_PIN
+
+    #define LCD_PINS_ENABLE          EXP1_08_PIN
+    #define LCD_PINS_D4              EXP1_06_PIN
+
     #if ENABLED(FYSETC_MINI_12864)
-      #define DOGLCD_CS              EXP1_03_PIN
-      #define DOGLCD_A0              EXP1_04_PIN
+      #define DOGLCD_CS              EXP1_08_PIN
+      #define DOGLCD_A0              EXP1_07_PIN
       //#define LCD_BACKLIGHT_PIN           -1
-      #define LCD_RESET_PIN          EXP1_05_PIN  // Must be high or open for LCD to operate normally.
+      #define LCD_RESET_PIN          EXP1_06_PIN  // Must be high or open for LCD to operate normally.
       #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
         #ifndef RGB_LED_R_PIN
-          #define RGB_LED_R_PIN      EXP1_06_PIN
+          #define RGB_LED_R_PIN      EXP1_05_PIN
         #endif
         #ifndef RGB_LED_G_PIN
-          #define RGB_LED_G_PIN      EXP1_07_PIN
+          #define RGB_LED_G_PIN      EXP1_04_PIN
         #endif
         #ifndef RGB_LED_B_PIN
-          #define RGB_LED_B_PIN      EXP1_08_PIN
+          #define RGB_LED_B_PIN      EXP1_03_PIN
         #endif
       #elif ENABLED(FYSETC_MINI_12864_2_1)
-        #define NEOPIXEL_PIN         EXP1_06_PIN
+        #define NEOPIXEL_PIN         EXP1_05_PIN
       #endif
     #endif // !FYSETC_MINI_12864
 
     #if IS_ULTIPANEL
-      #define LCD_PINS_D5            EXP1_06_PIN
-      #define LCD_PINS_D6            EXP1_07_PIN
-      #define LCD_PINS_D7            EXP1_08_PIN
+      #define LCD_PINS_D5            EXP1_05_PIN
+      #define LCD_PINS_D6            EXP1_04_PIN
+      #define LCD_PINS_D7            EXP1_03_PIN
 
       #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
         #define BTN_ENC_EN           LCD_PINS_D7  // Detect the presence of the encoder

@@ -162,7 +162,7 @@
 #define Y_DRIVER_TYPE  TMC2209
 //#define Z_DRIVER_TYPE  TMC2209
 //#define X2_DRIVER_TYPE A4988
-//#define Y2_DRIVER_TYPE A4988
+#define Y2_DRIVER_TYPE TMC2209
 //#define Z2_DRIVER_TYPE A4988
 //#define Z3_DRIVER_TYPE A4988
 //#define Z4_DRIVER_TYPE A4988
@@ -1643,7 +1643,7 @@
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
 #define INVERT_X_DIR true
-#define INVERT_Y_DIR false
+#define INVERT_Y_DIR true
 #define INVERT_Z_DIR false
 //#define INVERT_I_DIR false
 //#define INVERT_J_DIR false
@@ -1696,7 +1696,7 @@
 // @section geometry
 
 // The size of the printable area
-#define X_BED_SIZE 260
+#define X_BED_SIZE 360
 #define Y_BED_SIZE 300
 
 // Travel limits (linear=mm, rotational=°) after homing, corresponding to endstop positions.
@@ -3210,7 +3210,7 @@
 // Use software PWM to drive the fan, as for the heaters. This uses a very low frequency
 // which is not as annoying as with the hardware PWM. On the other hand, if this frequency
 // is too low, you should also increment SOFT_PWM_SCALE.
-//#define FAN_SOFT_PWM
+#define FAN_SOFT_PWM
 
 // Incrementing this by 1 will double the software PWM frequency,
 // affecting heaters, and the fan if FAN_SOFT_PWM is enabled.

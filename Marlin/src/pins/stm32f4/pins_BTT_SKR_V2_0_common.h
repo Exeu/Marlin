@@ -67,8 +67,9 @@
 //
 #define X_DIAG_PIN                          PC1   // X-STOP
 #define Y_DIAG_PIN                          PC3   // Y-STOP
+#define Y2_DIAG_PIN                         PC2
 #define Z_DIAG_PIN                          PC0   // Z-STOP
-#define E0_DIAG_PIN                         PC2   // E0DET
+//#define E0_DIAG_PIN                         PC2   // E0DET
 #define E1_DIAG_PIN                         PA0   // E1DET
 
 //
@@ -188,6 +189,13 @@
   #define Y_CS_PIN                          PD3
 #endif
 
+#define Y2_STEP_PIN                          PD15
+#define Y2_DIR_PIN                           PD14
+#define Y2_ENABLE_PIN                        PC7
+#ifndef Y2_CS_PIN
+  #define Y2_CS_PIN                          PC6
+#endif
+
 #define Z_STEP_PIN                          PA15
 #define Z_DIR_PIN                           PA8
 #define Z_ENABLE_PIN                        PD1
@@ -252,10 +260,10 @@
   #define HEATER_1_PIN                      PB4   // Heater1
 #endif
 #ifndef HEATER_BED_PIN
-  #define HEATER_BED_PIN                    PD7   // Hotbed
+  #define HEATER_BED_PIN                    PB7   // Hotbed
 #endif
 #ifndef FAN_PIN
-  #define FAN_PIN                           PB7   // Fan0
+  #define FAN_PIN                           PD7   // Fan0
 #endif
 
 #if HAS_CUTTER
@@ -317,14 +325,17 @@
   #define Y_SERIAL_TX_PIN                   PD3
   #define Y_SERIAL_RX_PIN        Y_SERIAL_TX_PIN
 
+  #define Y2_SERIAL_TX_PIN                   PC6
+  #define Y2_SERIAL_RX_PIN        Y2_SERIAL_TX_PIN
+
   #define Z_SERIAL_TX_PIN                   PD0
   #define Z_SERIAL_RX_PIN        Z_SERIAL_TX_PIN
 
   #define E0_SERIAL_TX_PIN                  PC6
   #define E0_SERIAL_RX_PIN      E0_SERIAL_TX_PIN
 
-  #define E1_SERIAL_TX_PIN                  PD12
-  #define E1_SERIAL_RX_PIN      E1_SERIAL_TX_PIN
+  //#define E1_SERIAL_TX_PIN                  PD12
+  //#define E1_SERIAL_RX_PIN      E1_SERIAL_TX_PIN
 
   // Reduce baud rate to improve software serial reliability
   #define TMC_BAUD_RATE                    19200
